@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Task{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="content-text">
+        <div class="main-text">
+            <h2>Oops..<br>It seems you are not logged in</h2>
+            <p>To work in My Task, register or log in to your account</p>
+            <div class="button-container">
+                <a href="{% url 'register' %}">
+                    <button class="btn-primary btn-register">
+                        <img src="{% static 'registration_logo.png' %}" alt="Register Icon">
+                        Register
+                    </button>
+                </a>
+                <a href="{% url 'login' %}">
+                    <button class="btn-primary btn-login">
+                        <img src="{% static 'login_logo.png' %}" alt="Login Icon">
+                        Log in
+                    </button>
+                </a>
+            </div>
+        </div>
+        <img src="{% static 'non.png' %}" alt="Base Image" class="thinking-image">
+    </div>
+</div>
+
+<style>
+    nav {
+        margin-bottom: 10px;
+    }
+    nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+    nav a:hover {
+        text-decoration: underline;
+    }
+    .sidebar {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: white;
+        position: absolute;
+        top: 85px; 
+        left: 20px;
+        border-radius: 8px;
+        box-shadow: none;
+    }
+    .sidebar img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .sidebar-text {
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar-title {
+        font-size: 24px; 
+        font-weight: 700;
+        color: #000000;
+        margin: 0;
+    }
+    .sidebar-subtitle {
+        font-size: 13px;
+        color: #82869E;
+        font-weight: 400;
+        margin: 0;
+    }
+    .content {
+        padding: 10px;
+        margin-left: 200px;
+    }
+    .content-text {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .thinking-image {
+        margin-left: 20px;
+        padding-left: 300px;
+        max-width: 500px;
+        height: auto;
+    }
+    .main-text {
+        max-width: 600px;
+    }
+    .main-text h2 {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+    .main-text p {
+        font-size: 15px;
+        color: #82869E;
+        margin-bottom: 20px;
+    }
+    .button-container {
+        display: flex;
+        gap: 10px;
+    }
+    .btn-primary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        border-radius: 99px;
+        padding: 0 15px;
+        font-size: 15px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-primary img {
+        margin-right: 8px;
+        height: 19px;
+        width: auto;
+    }
+    .btn-register {
+        background-color: #2D2ACD;
+        color: white;
+    }
+    .btn-register:hover {
+        background-color: #1a1a8c;
+    }
+    .btn-login {
+        background-color: white;
+        color: #2D2ACD;
+        border: 2px solid #2D2ACD;
+    }
+    .btn-login:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+{% endblock %}

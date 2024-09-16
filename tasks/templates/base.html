@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        header {
+            background: linear-gradient(135deg, #221ECA, #6461DA);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        nav {
+            margin-bottom: 10px;
+        }
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .sidebar {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            position: absolute;
+            top: 85px; 
+            left: 20px;
+            border-radius: 8px;
+            box-shadow: none;
+        }
+        .sidebar img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .sidebar-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-title {
+            font-size: 24px; 
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
+        }
+        .sidebar-subtitle {
+            font-size: 13px;
+            color: #82869E;
+            font-weight: 400;
+            margin: 0;
+        }
+        .content {
+            padding: 10px;
+            margin-left: 200px;
+        }
+        .content-text {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .content-text img {
+            margin-left: 20px;
+            max-width: 500px;
+            height: auto;
+        }
+        .main-text {
+            max-width: 600px;
+        }
+        .main-text h2 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .main-text p {
+            font-size: 15px;
+            color: #82869E;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            border-radius: 99px;
+            padding: 0 15px;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary img {
+            margin-right: 8px;
+            height: 19px;
+            width: auto;
+        }
+        .btn-register {
+            background-color: #2D2ACD;
+            color: white;
+        }
+        .btn-register:hover {
+            background-color: #1a1a8c;
+        }
+        .btn-login {
+            background-color: white;
+            color: #2D2ACD;
+            border: 2px solid #2D2ACD;
+        }
+        .btn-login:hover {
+            background-color: #f0f0f0;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'profile' %}">Hi, {{ user.username }}</a>
+            {% else %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'login' %}">Log in</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="sidebar">
+        {% load static %}
+        <img src="{% static 'logo.png' %}" alt="Logo">
+        <div class="sidebar-text">
+            <a href="{% url 'home' %}">
+                <div class="sidebar-title">My Task</div>
+            </a>
+            <div class="sidebar-subtitle">A place to organize the work of programmers</div>
+        </div>
+    </div>
+    
+    {% block content %}
+    <div class="content">
+        <div class="content-text">
+            <div class="main-text">
+                <h2>My Task helps you manage all employees, tasks, and tools in one place</h2>
+                <p>Connect everything in one place, even if your team members are scattered around the world.</p>
+                <div class="button-container">
+                    <a href="{% url 'register' %}">
+                        <button class="btn-primary btn-register">
+                            <img src="{% static 'registration_logo.png' %}" alt="Register Icon">
+                            Register
+                        </button>
+                    </a>
+                    <a href="{% url 'login' %}">
+                        <button class="btn-primary btn-login">
+                            <img src="{% static 'login_logo.png' %}" alt="Login Icon">
+                            Log in
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <img src="{% static 'base.png' %}" alt="Base Image">
+        </div>
+    </div>
+    {% endblock %}
+    
+    
+</body>
+</html>

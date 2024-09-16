@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <div class="form-container">
+        <h2>Register</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="button-container">
+                <button type="submit" class="btn-primary btn-register">Register</button>
+            </div>
+        </form>
+        <p class="register-link">
+            Already have an account? 
+            <span class="button-container">
+                <a href="{% url 'login' %}" class="btn-primary btn-login">Log in</a>
+            </span>
+        </p>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+
+    body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+
+    .form-wrapper {
+        width: 100%;
+        max-width: 700px; 
+        padding: 20px;
+        margin: auto;
+    }
+
+    .form-container {
+        padding: 40px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .form-container h2 {
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 30px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center; 
+        margin: 20px 0; 
+    }
+
+    .btn-primary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        border-radius: 99px;
+        padding: 0 15px;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        margin: 10px; 
+    }
+
+    .btn-register {
+        color: white; 
+        background-color: #2D2ACD; 
+        width: 150px;
+        text-decoration: none;
+    }
+
+    .btn-register:hover {
+        background-color: #1a1a8c; 
+    }
+
+    .btn-login {
+        background-color: white; 
+        color: #2D2ACD; 
+        border: 2px solid #2D2ACD; 
+    }
+
+    .btn-login:hover {
+        background-color: #f0f0f0; 
+    }
+
+    .register-link {
+        margin-top: 10px;
+    }
+
+    .register-link a {
+        text-decoration: none;
+        color: #2D2ACD; 
+        font-size: 15px; 
+    }
+</style>
+{% endblock %}
