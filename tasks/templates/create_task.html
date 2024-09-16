@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+<div class="header-wrapper">
+    <h2>Create a New Task</h2>
+</div>
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-primary btn-register">Save Task</button>
+</form>
+
+<style>
+    h2 {
+        margin-bottom: 20px;
+        color: #434657;
+    }
+    .header-wrapper {
+        margin-top: 120px;
+    }
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .btn-primary {
+        background-color: #2D2ACD;
+        color: white;
+        border-radius: 99px;
+        height: 40px;
+        border: none;
+        cursor: pointer;
+        padding: 0 20px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

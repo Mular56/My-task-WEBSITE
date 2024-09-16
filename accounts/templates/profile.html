@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>Your Profile</h2>
+    <div class="profile-card">
+        <div class="profile-info">
+            <h3>{{ user.get_full_name }}</h3>
+            <p>{{ user.email }}</p>
+            <div class="button-container">
+                <a href="{% url 'dashboard' %}" class="btn dashboard-btn">Go to your dashboard</a>
+                <a href="{% url 'edit_profile' %}" class="btn edit-btn">Edit your profile</a>
+            </div>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn logout-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    h2 {
+        color: #434657; 
+    }
+    .profile-container {
+        padding: 20px;
+        text-align: center;
+    }
+    .profile-card {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+    }
+    .profile-info {
+        margin-bottom: 20px;
+    }
+    .profile-info h3 {
+        color: #434657;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    .profile-info p {
+        color: #82869E;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .btn {
+        padding: 5px 10px;
+        height: 28px;
+        border-radius: 20px; 
+        text-decoration: none;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500; 
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none; 
+        cursor: pointer; 
+    }
+    .dashboard-btn, .edit-btn {
+        background-color: #2D2ACD;
+    }
+    .logout-btn {
+        background-color: #FF6574;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

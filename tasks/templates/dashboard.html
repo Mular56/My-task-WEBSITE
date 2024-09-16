@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="header-wrapper">
+    <h2 class="dashboard-title">Dashboard</h2>
+    <p>You can only view and move tasks if you are an administrator or task executor</p>
+</div>
+
+<div class="create-task-container">
+    <a href="{% url 'create_task' %}" class="create-task-button">Create Task</a>
+</div>
+
+<div class="dashboard-container">
+    <div class="status-column">
+        <div class="status-title">New</div>
+        {% for task in tasks_by_status.new %}
+        <div class="task-card">
+            <h4><a href="{% url 'task_edit' task.pk %}">{{ task.title }}</a></h4>
+            <p>
+                {% if task.description|length > 100 %}
+                    {{ task.description|slice:":100" }}...
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+            </p>
+        
+            <p><strong>Створено:</strong> {{ task.creator.username }}</p>
+        
+            <p><strong>Виконавець:</strong> {{ task.assignee.username }}</p>
+        
+            {% if task.status == 'new' and task.assignee == user%}
+                <a href="{% url 'move_task' task.pk 'in_progress' %}" class="move-button">→</a>
+            {% endif %}
+        </div>
+        
+        {% empty %}
+            <p>No tasks found.</p>
+        {% endfor %}
+    </div>
+
+    <div class="status-column">
+        <div class="status-title">In Progress</div>
+        {% for task in tasks_by_status.in_progress %}
+        <div class="task-card">
+            <h4><a href="{% url 'task_edit' task.pk %}">{{ task.title }}</a></h4>
+            <p>
+                {% if task.description|length > 100 %}
+                    {{ task.description|slice:":100" }}...
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+            </p>
+            <p><strong>Створено:</strong> {{ task.creator.username }}</p>
+            <p><strong>Виконавець:</strong> {{ task.assignee.username }}</p>
+        
+            {% if task.status == 'in_progress' and task.assignee == user%}
+                <a href="{% url 'move_task' task.pk 'new' %}" class="move-button">←</a>
+                <a href="{% url 'move_task' task.pk 'in_qa' %}" class="move-button">→</a>
+            {% endif %}
+        </div>
+        
+        {% empty %}
+            <p>No tasks found.</p>
+        {% endfor %}
+    </div>
+
+    <div class="status-column">
+        <div class="status-title">In QA</div>
+        {% for task in tasks_by_status.in_qa %}
+        <div class="task-card">
+            <h4><a href="{% url 'task_edit' task.pk %}">{{ task.title }}</a></h4>
+            <p>
+                {% if task.description|length > 100 %}
+                    {{ task.description|slice:":100" }}...
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+            </p>
+            <p><strong>Створено:</strong> {{ task.creator.username }}</p>
+            <p><strong>Виконавець:</strong> {{ task.assignee.username }}</p>
+        
+            {% if task.status == 'in_qa' and task.assignee == user%}
+                <a href="{% url 'move_task' task.pk 'in_progress' %}" class="move-button">←</a>
+                <a href="{% url 'move_task' task.pk 'ready' %}" class="move-button">→</a>
+            {% endif %}
+        </div>
+        
+        {% empty %}
+            <p>No tasks found.</p>
+        {% endfor %}
+    </div>
+
+    <div class="status-column">
+        <div class="status-title">Ready</div>
+        {% for task in tasks_by_status.ready %}
+        <div class="task-card">
+            <h4><a href="{% url 'task_edit' task.pk %}">{{ task.title }}</a></h4>
+            <p>
+                {% if task.description|length > 100 %}
+                    {{ task.description|slice:":100" }}...
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+            </p>
+            <p><strong>Створено:</strong> {{ task.creator.username }}</p>
+            <p><strong>Виконавець:</strong> {{ task.assignee.username }}</p>
+        
+            {% if task.status == 'ready' and task.assignee == user or user.is_superuser%}
+                <a href="{% url 'move_task' task.pk 'in_qa' %}" class="move-button">←</a>
+                {% if user.is_superuser %}
+                    <a href="{% url 'move_task' task.pk 'done' %}" class="move-button">→</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        
+        {% empty %}
+            <p>No tasks found.</p>
+        {% endfor %}
+    </div>
+
+    <div class="status-column">
+        <div class="status-title">Done</div>
+        {% for task in tasks_by_status.done %}
+        <div class="task-card">
+            <h4><a href="{% url 'task_edit' task.pk %}">{{ task.title }}</a></h4>
+            <p>
+                {% if task.description|length > 100 %}
+                    {{ task.description|slice:":100" }}...
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+            </p>
+            <p><strong>Створено:</strong> {{ task.creator.username }}</p>
+            <p><strong>Виконавець:</strong> {{ task.assignee.username }}</p>
+        
+            {% if task.status == 'done' and user.is_superuser %}
+                <a href="{% url 'move_task' task.pk 'ready' %}" class="move-button">←</a>
+            {% endif %}
+        </div>
+        
+        {% empty %}
+            <p>No tasks found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .header-wrapper {
+        margin-top: 120px; 
+    }
+    .dashboard-container {
+        display: flex;
+        gap: 20px;
+        
+    }
+    .status-column {
+        flex: 1;
+        background-color: #f4f5f7;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    .status-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #434657;
+    }
+    .task-card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .task-card h4 {
+        margin: 0 0 5px 0;
+    }
+    .task-card p {
+        margin: 0 0 10px 0;
+        color: #82869E;
+    }
+    .move-button {
+        display: inline-block;
+        font-size: 18px;
+        color: #2D2ACD;
+        text-decoration: none;
+        margin-right: 5px;
+    }
+    .move-button:hover {
+        text-decoration: underline;
+    }
+    .create-task-container {
+        margin-bottom: 20px;
+        
+    }
+    .create-task-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        color: white;
+        background-color: #2D2ACD;
+        border-radius: 99px;
+        text-decoration: none;
+        text-align: center;
+    }
+    .create-task-button:hover {
+        background-color: #1a1a8c;
+    }
+</style>
+{% endblock %}

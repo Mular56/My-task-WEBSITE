@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<div class="header-wrapper">
+    <h2>Edit Task</h2>  
+</div>
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if task.creator == request.user or request.user.is_superuser %}
+        <button type="submit">Save</button>
+    {% endif %}
+</form>
+<style>
+
+.header-wrapper {
+    margin-top: 120px; 
+}
+</style>
+
+{% endblock %}
